@@ -1,3 +1,5 @@
+[![Test with PyTest](https://github.com/matt-plank/waracle-python-api-challenge/actions/workflows/test.yaml/badge.svg)](https://github.com/matt-plank/waracle-python-api-challenge/actions/workflows/test.yaml)
+
 # Python API Challenge
 
 My solution to the "Python API Challenge" take-home assessment from Waracle.
@@ -23,7 +25,7 @@ Start server
 $ uvicorn cake_api.app:app --host 0.0.0.0 --port <PORT>
 ```
 
-## Setup (for development)
+## Setup (for development and testing)
 
 Clone the repo
 

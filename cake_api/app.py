@@ -1,12 +1,6 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+
+from .routes import cake
 
 app = FastAPI()
-
-
-@app.get("/")
-async def index():
-    return JSONResponse(
-        status_code=200,
-        content={"message": "Hello, world!"},
-    )
+app.include_router(cake.router, prefix="/cake")

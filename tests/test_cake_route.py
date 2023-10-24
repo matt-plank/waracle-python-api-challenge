@@ -114,3 +114,15 @@ def test_put_name_too_long(client):
     )
 
     assert response.status_code == 422
+
+
+def test_delete(client):
+    response = client.delete("/cake/2")
+
+    assert response.status_code == 200
+
+
+def test_delete_bad_id(client):
+    response = client.delete("/cake/100")
+
+    assert response.status_code == 404

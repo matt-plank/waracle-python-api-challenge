@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from .. import models, schemas
@@ -51,3 +52,17 @@ async def update(cake: schemas.PartialCake, db: Session = Depends(get_db)):
     db.commit()
 
     return db_cake
+
+
+@router.delete("/{cake_id}")
+async def delete(cake_id: int, db: Session = Depends(get_db)):
+    db_cake: models.Cake | None = db.query(models.Cake).filter_by(id=cake_id).first()
+
+    if db_cake is None:
+        return JSONResponse(
+            status_code=404,
+            content={"message": f"Could not find cake with ID {cake_id}"},
+        )
+
+    db.delete(db_cake)
+    db.commit()

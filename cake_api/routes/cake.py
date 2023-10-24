@@ -1,28 +1,29 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from .. import models, schemas
+from ..db import get_db
 
 router = APIRouter()
 
 
-class Cake(BaseModel):
-    id: int
-    name: str
-    comment: str
-    imageUrl: str
-    yumFactor: int
+@router.get("", response_model=list[schemas.Cake])
+async def get_many(db: Session = Depends(get_db)):
+    cakes = db.query(models.Cake).all()
+
+    return cakes
 
 
-CAKES: list[Cake] = [
-    Cake(
-        id=1,
-        name="Chocolate Cake",
-        comment="A simple chocolate cake",
-        imageUrl="https://food-images.files.bbci.co.uk/food/recipes/easy_chocolate_cake_31070_16x9.jpg",
-        yumFactor=5,
+@router.post("", response_model=schemas.CakeList)
+async def create(cake: schemas.NewCake, db: Session = Depends(get_db)):
+    db_cake: models.Cake = models.Cake(
+        name=cake.name,
+        comment=cake.comment,
+        imageUrl=cake.imageUrl,
+        yumFactor=cake.yumFactor,
     )
-]
 
+    db.add(db_cake)
+    db.commit()
 
-@router.get("")
-async def get_many():
-    return CAKES
+    return db_cake

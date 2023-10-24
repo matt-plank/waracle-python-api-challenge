@@ -1,17 +1,17 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class Cake(BaseModel):
     id: int
-    name: str
-    comment: str
+    name: str = Field(max_length=30)
+    comment: str = Field(max_length=200)
     imageUrl: str
     yumFactor: int
 
 
 class NewCake(BaseModel):
-    name: str
-    comment: str
+    name: str = Field(max_length=30)
+    comment: str = Field(max_length=200)
     imageUrl: str
     yumFactor: int
 

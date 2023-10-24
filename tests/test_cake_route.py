@@ -1,3 +1,5 @@
+import json
+
 from fastapi.testclient import TestClient
 
 
@@ -21,3 +23,65 @@ def test_get(client: TestClient):
             "yumFactor": 1,
         },
     ]
+
+
+def test_post(client: TestClient):
+    response = client.post(
+        "/cake",
+        json={
+            "name": "Sponge",
+            "comment": "Plain but unobjectionable",
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    )
+
+    assert response.status_code == 201
+    assert response.json() == {
+        "id": 3,
+        "name": "Sponge",
+        "comment": "Plain but unobjectionable",
+        "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+        "yumFactor": 2,
+    }
+
+
+def test_post_missing_name(client: TestClient):
+    response = client.post(
+        "/cake",
+        json={
+            "comment": "Plain but unobjectionable",
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_post_name_too_long(client: TestClient):
+    response = client.post(
+        "/cake",
+        json={
+            "name": "A" * 31,
+            "comment": "Plain but unobjectionable",
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_post_comment_too_long(client):
+    response = client.post(
+        "/cake",
+        json={
+            "name": "Simple cake name",
+            "comment": "A" * 201,
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    )
+
+    assert response.status_code == 422

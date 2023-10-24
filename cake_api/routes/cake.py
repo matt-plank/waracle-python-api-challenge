@@ -30,12 +30,15 @@ async def create(cake: schemas.NewCake, db: Session = Depends(get_db)):
     return db_cake
 
 
-@router.put("", response_model=schemas.Cake, status_code=status.HTTP_200_OK)
-async def update(cake: schemas.PartialCake, db: Session = Depends(get_db)):
-    db_cake: models.Cake | None = db.query(models.Cake).filter_by(id=cake.id).first()
+@router.put("/{cake_id}", response_model=schemas.Cake, status_code=status.HTTP_200_OK)
+async def update(cake_id: int, cake: schemas.PartialCake, db: Session = Depends(get_db)):
+    db_cake: models.Cake | None = db.query(models.Cake).filter_by(id=cake_id).first()
 
     if db_cake is None:
-        return {"message": f"Could not find cake with ID {cake.id}"}
+        return JSONResponse(
+            status_code=404,
+            content={"message": f"Could not find cake with ID {cake_id}"},
+        )
 
     if cake.name is not None:
         db_cake.name = cake.name

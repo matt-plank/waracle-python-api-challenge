@@ -87,9 +87,8 @@ def test_post_comment_too_long(client):
 
 def test_put_update_commend(client):
     response = client.put(
-        "/cake",
+        "/cake/1",
         json={
-            "id": 1,
             "comment": "My simple comment",
         },
     )
@@ -106,9 +105,8 @@ def test_put_update_commend(client):
 
 def test_put_name_too_long(client):
     response = client.put(
-        "/cake",
+        "/cake/1",
         json={
-            "id": 1,
             "name": "A" * 31,
         },
     )

@@ -10,7 +10,6 @@ class Cake(BaseModel):
 
 
 class PartialCake(BaseModel):
-    id: int
     name: str | None = Field(None, max_length=30)
     comment: str | None = Field(None, max_length=200)
     imageUrl: str | None = Field(None)

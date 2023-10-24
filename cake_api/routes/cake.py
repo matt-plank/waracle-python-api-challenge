@@ -48,4 +48,6 @@ async def update(cake: schemas.PartialCake, db: Session = Depends(get_db)):
     if cake.yumFactor is not None:
         db_cake.yumFactor = cake.yumFactor
 
+    db.commit()
+
     return db_cake

@@ -1,5 +1,3 @@
-import json
-
 from fastapi.testclient import TestClient
 
 
@@ -81,6 +79,37 @@ def test_post_comment_too_long(client):
             "comment": "A" * 201,
             "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
             "yumFactor": 2,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_put_update_commend(client):
+    response = client.put(
+        "/cake",
+        json={
+            "id": 1,
+            "comment": "My simple comment",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "id": 1,
+        "name": "Chocolate Cake",
+        "comment": "My simple comment",
+        "imageUrl": "https://food-images.files.bbci.co.uk/food/recipes/easy_chocolate_cake_31070_16x9.jpg",
+        "yumFactor": 5,
+    }
+
+
+def test_put_name_too_long(client):
+    response = client.put(
+        "/cake",
+        json={
+            "id": 1,
+            "name": "A" * 31,
         },
     )
 

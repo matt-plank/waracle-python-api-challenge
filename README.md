@@ -4,12 +4,19 @@
 
 My solution to the "Python API Challenge" take-home assessment from Waracle.
 
-## Setup (for use)
+## Setup
 
 Clone the repo
 
 ```bash
 $ git clone https://github.com/matt-plank/waracle-python-api-challenge.git
+```
+
+Install dependencies
+
+```bash
+# In repo root
+$ pip install -r requirements.txt
 ```
 
 Install package
@@ -17,43 +24,17 @@ Install package
 ```bash
 # In repo root
 $ pip install .
+# Or, for development:
+$ pip install -e .
 ```
 
 Start server
 
 ```bash
-$ uvicorn cake_api.app:app --host 0.0.0.0 --port <PORT>
-```
-
-## Setup (for development and testing)
-
-Clone the repo
-
-```bash
-$ git clone https://github.com/matt-plank/waracle-python-api-challenge.git
-```
-
-Install dev dependencies
-
-```bash
-# In repo root
-$ pip install -r requirements.txt
-```
-
-Install package (in editable mode)
-
-```bash
-# In repo root
-$ pip install -e .
-```
-
-Start server (auto reload)
-
-```bash
 $ uvicorn cake_api.app:app \
     --host 0.0.0.0 \
     --port <PORT> \
-    --reload
+    --reload  # For development
 ```
 
 Run tests

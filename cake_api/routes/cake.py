@@ -31,7 +31,9 @@ async def create(cake: schemas.NewCake, db: Session = Depends(get_db)):
 
 
 @router.put("/{cake_id}", response_model=schemas.Cake, status_code=status.HTTP_200_OK)
-async def update(cake_id: int, cake: schemas.PartialCake, db: Session = Depends(get_db)):
+async def update(
+    cake_id: int, cake: schemas.PartialCake, db: Session = Depends(get_db)
+):
     db_cake: models.Cake | None = db.query(models.Cake).filter_by(id=cake_id).first()
 
     if db_cake is None:

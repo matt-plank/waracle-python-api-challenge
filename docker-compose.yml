@@ -4,8 +4,12 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URI=postgresql://postgres:postgres@database:5432
-  database:
+      - DATABASE_URI=postgresql://postgres:postgres@postgres_db:5432
+      - PORT=8000
+    depends_on:
+      - postgres_db
+    
+  postgres_db:
     image: postgres:latest
     ports:
       - "5432:5432"

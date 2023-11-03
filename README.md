@@ -61,7 +61,6 @@ Or run tests
 
 ```bash
 $ docker run \
-    -p 8000:8000 \
     -e DATABASE_URI=sqlite://db.db \
     -it \
     cake_api \

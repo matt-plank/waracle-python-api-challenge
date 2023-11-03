@@ -1,10 +1,13 @@
 FROM python:3.10
 
-COPY requirements.txt /requirements.txt
+WORKDIR /app
+
+COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY cake_api cake_api
-COPY pyproject.toml /pyproject.toml
+COPY tests tests
+COPY pyproject.toml pyproject.toml
 RUN pip install .
 
 EXPOSE 8000

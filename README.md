@@ -4,7 +4,15 @@
 
 My solution to the "Python API Challenge" take-home assessment from Waracle.
 
-The Open API specification, as requested, can be found [here](cake_api/specification.json) or by requesting `http://cakes.matthewplank.com/spec`. The specification contains all information necessary to develop against the API, using the requested Open API format.
+The Open API specification, as requested, can be found [here](cake_api/specification.json).
+
+Alternatively, the specification can be found with a request to `GET https://cakes.matthewplank.com/spec`.
+
+For example:
+
+```bash
+$ curl https://cakes.matthewplank.com/spec
+```
 
 My solution is implemented using Python's FastAPI, validating data with Pydantic, and storing persistently with SQLAlchemy (tests run against a temporary SQLite database, my deployment uses Postgres, but the API is configured to be database agnostic - as long as it's SQL based). Users can deploy locally with docker-compose for an out-of-the-box environment where environment variables and databases are configured (with Postgres), Docker for slightly more control of the database, or Python for maximum environmental control.
 
@@ -24,7 +32,7 @@ Build and run
 $ docker-compose up
 ```
 
-## Setup with Docker
+## Setup and test with Docker
 
 Clone the repo
 
@@ -39,7 +47,7 @@ Build docker image
 $ docker build -t cake_api .
 ```
 
-Run docker image
+Run server
 
 ```bash
 $ docker run \
@@ -47,6 +55,17 @@ $ docker run \
     -e DATABASE_URI=<MY-DB-URI> \  # e.g. DATABASE_URI=sqlite://db.db
     -e PORT=8000 \  # the port the API will run on locally
     cake_api
+```
+
+Or run tests
+
+```bash
+$ docker run \
+    -p 8000:8000 \
+    -e DATABASE_URI=sqlite://db.db \
+    -it \
+    cake_api \
+    python -m pytest
 ```
 
 ## Setup with Python

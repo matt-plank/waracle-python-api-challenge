@@ -85,6 +85,34 @@ def test_post_comment_too_long(client):
     assert response.status_code == 422
 
 
+def test_post_yum_factor_too_large(client):
+    response = client.post(
+        "/cake",
+        json={
+            "name": "Cheesecake",
+            "comment": "Amazingly delicious",
+            "imageUrl": "https://t1.gstatic.com/licensed-image?q=tbn:ANd9GcSAGR_z32pqR6KX8pO021KtUDcZrzhSZW_EpLRZ5D0k1mTthOALP5hhom8Q345nHhCm",
+            "yumFactor": 6,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_post_yum_factor_too_small(client):
+    response = client.post(
+        "/cake",
+        json={
+            "name": "Fruit cake",
+            "comment": "Literally awful",
+            "imageUrl": "https://images.immediate.co.uk/production/volatile/sites/30/2021/10/Boiled-Fruit-Cake-8b92bb5.jpg?quality=90&resize=556,505",
+            "yumFactor": -1,
+        },
+    )
+
+    assert response.status_code == 422
+
+
 def test_put_update_commend(client):
     response = client.put(
         "/cake/1",
@@ -101,6 +129,28 @@ def test_put_update_commend(client):
         "imageUrl": "https://food-images.files.bbci.co.uk/food/recipes/easy_chocolate_cake_31070_16x9.jpg",
         "yumFactor": 5,
     }
+
+
+def test_put_yum_factor_too_large(client):
+    response = client.put(
+        "/cake/2",
+        json={
+            "yumFactor": 6,
+        },
+    )
+
+    assert response.status_code == 422
+
+
+def test_put_yum_factor_too_small(client):
+    response = client.put(
+        "/cake/2",
+        json={
+            "yumFactor": -1,
+        },
+    )
+
+    assert response.status_code == 422
 
 
 def test_put_name_too_long(client):

@@ -83,11 +83,13 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "required": true
+                    "required": true,
+                    "maxLength": 30
                   },
                   "comment": {
                     "type": "string",
-                    "required": true
+                    "required": true,
+                    "maxLength": 200
                   },
                   "imageUrl": {
                     "type": "string",
@@ -95,7 +97,9 @@
                   },
                   "yumFactor": {
                     "type": "integer",
-                    "required": true
+                    "required": true,
+                    "minimum": 1,
+                    "maximum": 5
                   }
                 }
               },
@@ -135,11 +139,13 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "required": false
+                    "required": false,
+                    "maxLength": 30
                   },
                   "comment": {
                     "type": "string",
-                    "required": false
+                    "required": false,
+                    "maxLength": 200
                   },
                   "imageUrl": {
                     "type": "string",
@@ -147,7 +153,9 @@
                   },
                   "yumFactor": {
                     "type": "integer",
-                    "required": false
+                    "required": false,
+                    "minimum": 1,
+                    "maximum": 5
                   }
                 }
               },

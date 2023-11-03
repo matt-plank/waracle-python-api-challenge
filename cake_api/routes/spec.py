@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 
 from ..spec import get_spec
 
@@ -6,5 +6,5 @@ router = APIRouter()
 
 
 @router.get("")
-async def get(spec: str = Depends(get_spec)):
-    return Response(spec)
+async def get(spec: dict = Depends(get_spec)):
+    return spec

@@ -1,0 +1,188 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Cake API",
+    "description": "A simple CRUD api that tracks cakes."
+  },
+  "servers": [
+    {
+      "url": "https://cakes.matthewplank.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/cake": {
+      "get": {
+        "summary": "List all cakes",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Cake 1",
+                    "comment": "A first cake",
+                    "imageUrl": "https://www.some-website.com/cake1.jpg",
+                    "yumFactor": 1
+                  },
+                  {
+                    "id": 2,
+                    "name": "Cake 2",
+                    "comment": "A second cake",
+                    "imageUrl": "https://www.some-website.com/cake2.jpg",
+                    "yumFactor": 5
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cake/{cakeId}": {
+      "parameters": [
+        {
+          "name": "cakeId",
+          "in": "path",
+          "required": true,
+          "description": "The id of the cake to act on",
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get a single cake",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Cake 1",
+                  "comment": "A first cake",
+                  "imageUrl": "https://www.some-website.com/cake1.jpg",
+                  "yumFactor": 5
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new cake",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "comment": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "required": true
+                  },
+                  "yumFactor": {
+                    "type": "integer",
+                    "required": true
+                  }
+                }
+              },
+              "example": {
+                "name": "Cake 1",
+                "comment": "A first cake",
+                "imageUrl": "https://www.some-website.com/cake1.jpg",
+                "yumFactor": 5
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Cake 1",
+                  "comment": "A first cake",
+                  "imageUrl": "https://www.some-website.com/cake1.jpg",
+                  "yumFactor": 5
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a cake",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "comment": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "required": false
+                  },
+                  "yumFactor": {
+                    "type": "integer",
+                    "required": false
+                  }
+                }
+              },
+              "example": {
+                "name": "Cake 1",
+                "comment": "Updated comment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Cake 1",
+                  "comment": "Updated comment",
+                  "imageUrl": "https://www.some-website.com/cake1.jpg",
+                  "yumFactor": 5
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a cake",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}

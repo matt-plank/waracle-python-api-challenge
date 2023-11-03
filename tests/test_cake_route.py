@@ -124,3 +124,46 @@ def test_delete_bad_id(client):
     response = client.delete("/cake/100")
 
     assert response.status_code == 404
+
+
+def test_post_put_delete_and_get(client):
+    """Testing everything together in the same way I user might use the API."""
+
+    client.post(
+        "/cake",
+        json={
+            "name": "Sponge",
+            "comment": "Plain but unobjectionable",
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    )
+
+    client.put(
+        "/cake/1",
+        json={
+            "name": "Double Chocolate Cake",
+        },
+    )
+
+    client.delete("/cake/2")
+
+    response = client.get("/cake")
+
+    assert response.status_code == 200
+    assert response.json() == [
+        {
+            "id": 1,
+            "name": "Double Chocolate Cake",
+            "comment": "The best cake",
+            "imageUrl": "https://food-images.files.bbci.co.uk/food/recipes/easy_chocolate_cake_31070_16x9.jpg",
+            "yumFactor": 5,
+        },
+        {
+            "id": 3,
+            "name": "Sponge",
+            "comment": "Plain but unobjectionable",
+            "imageUrl": "https://drivemehungry.com/wp-content/uploads/2022/04/sponge-cake-16.jpg",
+            "yumFactor": 2,
+        },
+    ]
